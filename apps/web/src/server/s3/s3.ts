@@ -7,5 +7,7 @@ export const s3 = new S3Client({
     secretAccessKey: ServerWebAppConfig.S3.secretKey,
   },
   region: ServerWebAppConfig.S3.region,
-  endpoint: `https://${ServerWebAppConfig.S3.host}`,
+  endpoint: ServerWebAppConfig.S3.host
+    ? `https://${ServerWebAppConfig.S3.host}`
+    : undefined,
 })
