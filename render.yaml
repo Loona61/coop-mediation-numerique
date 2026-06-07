@@ -5,8 +5,7 @@ services:
     region: frankfurt
     plan: free
     buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm -F @app/web build
-    preDeployCommand: pnpm -F @app/web prisma migrate deploy
-    startCommand: pnpm -F @app/web start
+    startCommand: pnpm -F @app/web prisma migrate deploy && pnpm -F @app/web start
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
