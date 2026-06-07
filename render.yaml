@@ -30,6 +30,16 @@ services:
         generateValue: true
       - key: INTERNAL_API_PRIVATE_KEY
         generateValue: true
+      - key: SCW_DEFAULT_REGION
+        value: fr-par
+      - key: S3_HOST
+        value: s3.fr-par.scw.cloud
+      - key: UPLOADS_BUCKET
+        sync: false
+      - key: SCW_ACCESS_KEY
+        sync: false
+      - key: SCW_SECRET_KEY
+        sync: false
       - key: BASE_URL
         sync: false
       - key: EMAIL_FROM_ADDRESS
