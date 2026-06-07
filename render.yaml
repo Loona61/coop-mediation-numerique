@@ -1,0 +1,55 @@
+services:
+  - type: web
+    name: coop-mediation-numerique
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm -F @app/web build
+    preDeployCommand: pnpm -F @app/web prisma migrate deploy
+    startCommand: pnpm -F @app/web start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 25.4.0
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: NEXT_PUBLIC_APP_NAME
+        value: La Coop de la mediation numerique
+      - key: NEXT_PUBLIC_APP_SLUG
+        value: coop-mediation-numerique
+      - key: NEXT_PUBLIC_CONTACT_EMAIL
+        value: support@coop-numerique.anct.gouv.fr
+      - key: DATABASE_URL
+        fromDatabase:
+          name: coop-mediation-numerique-db
+          property: connectionString
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+      - key: HMAC_SECRET_KEY
+        generateValue: true
+      - key: INTERNAL_API_PRIVATE_KEY
+        generateValue: true
+      - key: BASE_URL
+        sync: false
+      - key: EMAIL_FROM_ADDRESS
+        sync: false
+      - key: EMAIL_FROM_NAME
+        value: La Coop de la mediation numerique
+      - key: SMTP_SERVER
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+
+databases:
+  - name: coop-mediation-numerique-db
+    region: frankfurt
+    plan: free
+    postgresMajorVersion: "17"
+    databaseName: coop_mediation_numerique
+    user: coop_mediation_numerique
